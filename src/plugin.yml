@@ -1,0 +1,7 @@
+name: Economy
+author: NurTeam
+version: 1.0
+main: de.nurteam.economy.Economy
+commands:
+  economy:
+    description: Economy Hauptbefehl
