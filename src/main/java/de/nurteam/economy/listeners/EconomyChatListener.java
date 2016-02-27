@@ -16,54 +16,42 @@ import de.nurteam.economy.Economy;
 import de.nurteam.economy.utils.EconomyUtils;
 import de.nurteam.economy.utils.PlayerEconomy;
 
-public class EconomyChatListener implements Listener
-{
+public class EconomyChatListener implements Listener {
 
 	Economy economy;
 
-	public EconomyChatListener(Economy economy)
-	{
+	public EconomyChatListener(Economy economy) {
 		this.economy = economy;
 	}
 
 	@EventHandler
-	public void onChat(AsyncPlayerChatEvent event)
-	{
+	public void onChat(AsyncPlayerChatEvent event) {
 		Player player = event.getPlayer();
 
-		if(economy.settingPin.contains(player.getUniqueId()))
-		{
+		if (economy.settingPin.contains(player.getUniqueId())) {
 			event.setCancelled(true);
-			if(event.getMessage().length() > 4 || event.getMessage().length() < 4)
-			{
+			if (event.getMessage().length() > 4 || event.getMessage().length() < 4) {
 				player.sendMessage(economy.getPrefix() + "§cDie PIN muss " + economy.getHighlight() + "4-stellig §csein.");
 				return;
 			}
 
-			if(!EconomyUtils.isNumber(event.getMessage()))
-			{
+			if (!EconomyUtils.isNumber(event.getMessage())) {
 				player.sendMessage(economy.getPrefix() + "§cDie PIN muss eine " + economy.getHighlight() + "4-stellige Zahl §csein.");
 				return;
 			}
 
 			byte[] byteArray = event.getMessage().getBytes();
 			String encodedPin = "";
-			try
-			{
+			try {
 				encodedPin = new String(Base64.getEncoder().encode(byteArray), "UTF-8");
-			}
-			catch (UnsupportedEncodingException e)
-			{
+			} catch (UnsupportedEncodingException e) {
 				player.sendMessage(economy.getPrefix() + "§cEs ist ein Fehler aufgetreten.");
 			}
 
-			if(!Economy.economyManager.hasAccount(player.getUniqueId()))
-			{
+			if (!Economy.economyManager.hasAccount(player.getUniqueId())) {
 				Economy.economyManager.createAccount(player.getUniqueId(), encodedPin);
 				player.sendMessage(economy.getPrefix() + "Dein " + economy.getHighlight() + "Bankkonto §7wurde §aerfolgreich §7erstellt.");
-			}
-			else
-			{
+			} else {
 				player.sendMessage(economy.getPrefix() + "Deine " + economy.getHighlight() + "PIN §7wurde §aerfolgreich §7geändert.");
 				Economy.economyManager.uploadToMySQL(player.getUniqueId());
 			}
@@ -71,26 +59,19 @@ public class EconomyChatListener implements Listener
 			Economy.economyManager.getPlayerEconomy(player.getUniqueId()).setEncodedPin(encodedPin);
 
 			economy.settingPin.remove(player.getUniqueId());
-		}
-
-		else if(economy.checkingForPin.contains(player.getUniqueId()))
-		{
+		} else if (economy.checkingForPin.contains(player.getUniqueId())) {
 			event.setCancelled(true);
 			PlayerEconomy playerEconomy = Economy.economyManager.getPlayerEconomy(player.getUniqueId());
 
 			byte[] byteArray = playerEconomy.getEncodedPin().getBytes();
 			String decodedPin = "";
-			try
-			{
+			try {
 				decodedPin = new String(Base64.getDecoder().decode(byteArray), "UTF-8");
-			}
-			catch (UnsupportedEncodingException e)
-			{
+			} catch (UnsupportedEncodingException e) {
 				player.sendMessage(economy.getPrefix() + "§cEs ist ein Fehler aufgetreten.");
 			}
 
-			if(decodedPin.equals(event.getMessage()))
-			{
+			if (decodedPin.equals(event.getMessage())) {
 				Inventory inventory = Bukkit.createInventory(null, InventoryType.HOPPER, economy.getHighlight() + "       Bankkontenverwaltung");
 
 				inventory.setItem(1, EconomyUtils.getItemstack(Material.PAPER, 1, 0, "§9PIN ändern", "§7Hier kannst du deine PIN ändern."));
@@ -106,26 +87,19 @@ public class EconomyChatListener implements Listener
 			player.sendMessage(economy.getPrefix() + "§cDie eingegebene " + economy.getHighlight() + "PIN §cist falsch!");
 			economy.checkingForPin.remove(player.getUniqueId());
 
-		}
-		
-		else if(economy.deletingAccount.contains(player.getUniqueId()))
-		{
+		} else if (economy.deletingAccount.contains(player.getUniqueId())) {
 			event.setCancelled(true);
 			PlayerEconomy playerEconomy = Economy.economyManager.getPlayerEconomy(player.getUniqueId());
 
 			byte[] byteArray = playerEconomy.getEncodedPin().getBytes();
 			String decodedPin = "";
-			try
-			{
+			try {
 				decodedPin = new String(Base64.getDecoder().decode(byteArray), "UTF-8");
-			}
-			catch (UnsupportedEncodingException e)
-			{
+			} catch (UnsupportedEncodingException e) {
 				player.sendMessage(economy.getPrefix() + "§cEs ist ein Fehler aufgetreten.");
 			}
 
-			if(decodedPin.equals(event.getMessage()))
-			{
+			if (decodedPin.equals(event.getMessage())) {
 				player.sendMessage(economy.getPrefix() + "§7Du hast dein " + economy.getHighlight() + "Bankkonto §aerfolgreich §7gelöscht.");
 				Economy.economyManager.deleteAccount(player.getUniqueId());
 				economy.deletingAccount.remove(player.getUniqueId());
