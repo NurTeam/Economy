@@ -25,7 +25,7 @@ public class EconomyInventoryClickListener implements Listener
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent event)
 	{
-		final Player player = (Player) event.getWhoClicked();
+		Player player = (Player) event.getWhoClicked();
 
 		if(event.getClickedInventory().getType() == InventoryType.CREATIVE)return;
 		
@@ -42,42 +42,44 @@ public class EconomyInventoryClickListener implements Listener
 
 			ItemStack itemStack = event.getCurrentItem();
 
-			if(itemStack.getItemMeta().getDisplayName().contains("PIN Ã¤ndern"))
+			if(itemStack.getItemMeta().getDisplayName().contains("PIN ändern"))
 			{
-				player.sendMessage(economy.getPrefix() + "Gebe nun eine neue " + economy.getHighlight() + "4-stellige PINÂ§7 ein.");
+				player.sendMessage(economy.getPrefix() + "Gebe nun eine neue " + economy.getHighlight() + "4-stellige PIN§7 ein.");
 				economy.settingPin.add(player.getUniqueId());
 
 				player.closeInventory();
 				Bukkit.getScheduler().scheduleSyncDelayedTask(economy, new Runnable() {
 
+					@Override
 					public void run()
 					{
 						if(economy.settingPin.contains(player.getUniqueId()))
 						{
 							economy.settingPin.remove(player.getUniqueId());
-							player.sendMessage(economy.getPrefix() + "Â§cDu hast zu lange gebraucht.");
+							player.sendMessage(economy.getPrefix() + "§cDu hast zu lange gebraucht.");
 						}
 					}
 				}, 10 * 20L);
 			}
 			
-			if(itemStack.getItemMeta().getDisplayName().contains("Bankkonto lÂ§schen"))
+			if(itemStack.getItemMeta().getDisplayName().contains("Bankkonto löschen"))
 			{
-				player.sendMessage(economy.getPrefix() + "Â§7Bist du sicher, dass du " + economy.getHighlight() + "dein Bankkonto Â§7lÃ¶schen mÃ¶chtest?");
-				player.sendMessage(economy.getPrefix() + "Â§7Es wird fÃ¼r immer weg sein! (Eine lange Zeit!)");
-				player.sendMessage(economy.getPrefix() + "Falls du es dir anders Ã¼berlegt hast, warte einfach " + economy.getHighlight() + "10 SekundenÂ§7.");
-				player.sendMessage(economy.getPrefix() + "Gebe nun eine neue " + economy.getHighlight() + "4-stellige PINÂ§7 ein.");
+				player.sendMessage(economy.getPrefix() + "§7Bist du sicher, dass du " + economy.getHighlight() + "dein Bankkonto §7löschen möchtest?");
+				player.sendMessage(economy.getPrefix() + "§7Es wird für immer weg sein! (Eine lange Zeit!)");
+				player.sendMessage(economy.getPrefix() + "Falls du es dir anders überlegt hast, warte einfach " + economy.getHighlight() + "10 Sekunden§7.");
+				player.sendMessage(economy.getPrefix() + "Gebe nun eine neue " + economy.getHighlight() + "4-stellige PIN§7 ein.");
 				economy.deletingAccount.add(player.getUniqueId());
 
 				player.closeInventory();
 				Bukkit.getScheduler().scheduleSyncDelayedTask(economy, new Runnable() {
 
+					@Override
 					public void run()
 					{
 						if(economy.deletingAccount.contains(player.getUniqueId()))
 						{
 							economy.deletingAccount.remove(player.getUniqueId());
-							player.sendMessage(economy.getPrefix() + "Â§cDu hast zu lange gebraucht.");
+							player.sendMessage(economy.getPrefix() + "§cDu hast zu lange gebraucht.");
 						}
 					}
 				}, 10 * 20L);

@@ -16,7 +16,7 @@ public class EconomyManager
 	Economy economy;
 	EconomyMySQL mySQL;
 	
-	private Map<UUID, PlayerEconomy> economies = new HashMap<UUID, PlayerEconomy>();
+	private Map<UUID, PlayerEconomy> economies = new HashMap<>();
 	
 	public EconomyManager(Economy economy)
 	{

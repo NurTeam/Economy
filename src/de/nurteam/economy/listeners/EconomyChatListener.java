@@ -13,8 +13,8 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 
 import de.nurteam.economy.Economy;
-import de.nurteam.economy.utils.EconomyUtils;
 import de.nurteam.economy.utils.PlayerEconomy;
+import de.nurteam.economy.utils.EconomyUtils;
 
 public class EconomyChatListener implements Listener
 {
@@ -36,13 +36,13 @@ public class EconomyChatListener implements Listener
 			event.setCancelled(true);
 			if(event.getMessage().length() > 4 || event.getMessage().length() < 4)
 			{
-				player.sendMessage(economy.getPrefix() + "Â§cDie PIN muss " + economy.getHighlight() + "4-stellig Â§csein.");
+				player.sendMessage(economy.getPrefix() + "§cDie PIN muss " + economy.getHighlight() + "4-stellig §csein.");
 				return;
 			}
 
 			if(!EconomyUtils.isNumber(event.getMessage()))
 			{
-				player.sendMessage(economy.getPrefix() + "Â§cDie PIN muss eine " + economy.getHighlight() + "4-stellige Zahl Â§csein.");
+				player.sendMessage(economy.getPrefix() + "§cDie PIN muss eine " + economy.getHighlight() + "4-stellige Zahl §csein.");
 				return;
 			}
 
@@ -54,17 +54,17 @@ public class EconomyChatListener implements Listener
 			}
 			catch (UnsupportedEncodingException e)
 			{
-				player.sendMessage(economy.getPrefix() + "Â§cEs ist ein Fehler aufgetreten.");
+				player.sendMessage(economy.getPrefix() + "§cEs ist ein Fehler aufgetreten.");
 			}
 
 			if(!Economy.economyManager.hasAccount(player.getUniqueId()))
 			{
 				Economy.economyManager.createAccount(player.getUniqueId(), encodedPin);
-				player.sendMessage(economy.getPrefix() + "Dein " + economy.getHighlight() + "Bankkonto Â§7wurde Â§aerfolgreich Â§7erstellt.");
+				player.sendMessage(economy.getPrefix() + "Dein " + economy.getHighlight() + "Bankkonto §7wurde §aerfolgreich §7erstellt.");
 			}
 			else
 			{
-				player.sendMessage(economy.getPrefix() + "Deine " + economy.getHighlight() + "PIN Â§7wurde Â§aerfolgreich Â§7geÃ¤ndert.");
+				player.sendMessage(economy.getPrefix() + "Deine " + economy.getHighlight() + "PIN §7wurde §aerfolgreich §7geändert.");
 				Economy.economyManager.uploadToMySQL(player.getUniqueId());
 			}
 
@@ -86,24 +86,24 @@ public class EconomyChatListener implements Listener
 			}
 			catch (UnsupportedEncodingException e)
 			{
-				player.sendMessage(economy.getPrefix() + "Â§cEs ist ein Fehler aufgetreten.");
+				player.sendMessage(economy.getPrefix() + "§cEs ist ein Fehler aufgetreten.");
 			}
 
 			if(decodedPin.equals(event.getMessage()))
 			{
 				Inventory inventory = Bukkit.createInventory(null, InventoryType.HOPPER, economy.getHighlight() + "       Bankkontenverwaltung");
 
-				inventory.setItem(1, EconomyUtils.getItemstack(Material.PAPER, 1, 0, "Â§9PIN Ã¤ndern", "Â§7Hier kannst du deine PIN Ã¤ndern."));
-				inventory.setItem(3, EconomyUtils.getItemstack(Material.BARRIER, 1, 0, "Â§cBankkonto lÃ¶schen", "Â§7Hier kannst du dein " + economy.getHighlight() + "Bankkonto Â§7lÃ¶schen."));
+				inventory.setItem(1, EconomyUtils.getItemstack(Material.PAPER, 1, 0, "§9PIN ändern", "§7Hier kannst du deine PIN ändern."));
+				inventory.setItem(3, EconomyUtils.getItemstack(Material.BARRIER, 1, 0, "§cBankkonto löschen", "§7Hier kannst du dein " + economy.getHighlight() + "Bankkonto §7löschen."));
 
 				player.openInventory(inventory);
 
 				economy.checkingForPin.remove(player.getUniqueId());
-				player.sendMessage(economy.getPrefix() + "Â§7Du hast die " + economy.getHighlight() + "Bankkontenverwaltung Â§aerfolgreich Â§7geÃ¶ffnet.");
+				player.sendMessage(economy.getPrefix() + "§7Du hast die " + economy.getHighlight() + "Bankkontenverwaltung §aerfolgreich §7geöffnet.");
 				return;
 			}
 
-			player.sendMessage(economy.getPrefix() + "Â§cDie eingegebene " + economy.getHighlight() + "PIN Â§cist falsch!");
+			player.sendMessage(economy.getPrefix() + "§cDie eingegebene " + economy.getHighlight() + "PIN §cist falsch!");
 			economy.checkingForPin.remove(player.getUniqueId());
 
 		}
@@ -121,18 +121,18 @@ public class EconomyChatListener implements Listener
 			}
 			catch (UnsupportedEncodingException e)
 			{
-				player.sendMessage(economy.getPrefix() + "Â§cEs ist ein Fehler aufgetreten.");
+				player.sendMessage(economy.getPrefix() + "§cEs ist ein Fehler aufgetreten.");
 			}
 
 			if(decodedPin.equals(event.getMessage()))
 			{
-				player.sendMessage(economy.getPrefix() + "Â§7Du hast dein " + economy.getHighlight() + "Bankkonto Â§aerfolgreich Â§7gelÃ¶scht.");
+				player.sendMessage(economy.getPrefix() + "§7Du hast dein " + economy.getHighlight() + "Bankkonto §aerfolgreich §7gelöscht.");
 				Economy.economyManager.deleteAccount(player.getUniqueId());
 				economy.deletingAccount.remove(player.getUniqueId());
 				return;
 			}
 
-			player.sendMessage(economy.getPrefix() + "Â§cDie eingegebene " + economy.getHighlight() + "PIN Â§cist falsch!");
+			player.sendMessage(economy.getPrefix() + "§cDie eingegebene " + economy.getHighlight() + "PIN §cist falsch!");
 			economy.deletingAccount.remove(player.getUniqueId());
 
 		}

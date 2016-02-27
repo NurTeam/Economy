@@ -24,9 +24,9 @@ public class EconomyPlayerJoinListener implements Listener
 		
 		if(Economy.economyManager.hasAccount(player.getUniqueId()))
 		{
-			player.sendMessage(economy.getPrefix() + "Â§7Bitte warte kurz bis dein Bankkonto geladen wurde.");
+			player.sendMessage(economy.getPrefix() + "§7Bitte warte kurz bis dein Bankkonto geladen wurde.");
 			Economy.economyManager.loadFromMySQL(player.getUniqueId());
-			player.sendMessage(economy.getPrefix() + "Â§7Dein Bankkonto wurde Â§aerfolgreich Â§7geladen.");
+			player.sendMessage(economy.getPrefix() + "§7Dein Bankkonto wurde §aerfolgreich §7geladen.");
 		}
 	}
 }

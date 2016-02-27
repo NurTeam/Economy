@@ -25,9 +25,9 @@ public class Economy extends JavaPlugin
 	public static EconomyManager economyManager;
 	public EconomyFileManager fileManager;
 	public EconomyCalculator calculator;
-	public List<UUID> settingPin = new ArrayList<UUID>();
-	public List<UUID> deletingAccount = new ArrayList<UUID>();
-	public List<UUID> checkingForPin = new ArrayList<UUID>();
+	public List<UUID> settingPin = new ArrayList<>();
+	public List<UUID> deletingAccount = new ArrayList<>();
+	public List<UUID> checkingForPin = new ArrayList<>();
 	
 	@Override
 	public void onEnable()
@@ -51,7 +51,7 @@ public class Economy extends JavaPlugin
 				economyManager.loadFromMySQL(player.getUniqueId());
 			}
 		}
-		Bukkit.getConsoleSender().sendMessage(getPrefix() + "Das Plugin wurde erfolgreich Â§aaktiviert Â§8| Â§7Plugin by " + getHighlight() + getDescription().getAuthors() + " Â§8| Â§7Version " + getHighlight() + getDescription().getVersion());
+		Bukkit.getConsoleSender().sendMessage(getPrefix() + "Das Plugin wurde erfolgreich §aaktiviert §8| §7Plugin by " + getHighlight() + getDescription().getAuthors() + " §8| §7Version " + getHighlight() + getDescription().getVersion());
 	}
 	
 	@Override
@@ -63,7 +63,7 @@ public class Economy extends JavaPlugin
 				economyManager.uploadToMySQL(player.getUniqueId());
 			}
 		}
-		Bukkit.getConsoleSender().sendMessage(getPrefix() + "Das Plugin wurde erfolgreich Â§cdeaktiviert Â§8| Â§7Plugin by " + getHighlight() + getDescription().getAuthors() + " Â§8| Â§7Version " + getHighlight() + getDescription().getVersion());
+		Bukkit.getConsoleSender().sendMessage(getPrefix() + "Das Plugin wurde erfolgreich §cdeaktiviert §8| §7Plugin by " + getHighlight() + getDescription().getAuthors() + " §8| §7Version " + getHighlight() + getDescription().getVersion());
 	}
 	
 	private void registerListener(Listener listener)
@@ -73,12 +73,12 @@ public class Economy extends JavaPlugin
 	
 	public String getPrefix()
 	{
-		return "Â§9Economy Â§8| Â§7";
+		return "§9Economy §8| §7";
 	}
 	
 	public String getHighlight()
 	{
-		return "Â§6";
+		return "§6";
 	}
 
 }
