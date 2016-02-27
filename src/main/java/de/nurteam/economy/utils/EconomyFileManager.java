@@ -10,28 +10,24 @@ import de.nurteam.economy.Economy;
 import de.nurteam.economy.mysql.EconomyMySQL;
 
 public class EconomyFileManager {
-	
+
 	Economy economy;
 	EconomyMySQL mySQL;
 
-	public EconomyFileManager(Economy economy)
-	{
+	public EconomyFileManager(Economy economy) {
 		this.economy = economy;
 		this.mySQL = this.economy.mySQL;
 	}
-	
-	public File getMySQLFile()
-	{
+
+	public File getMySQLFile() {
 		return new File("plugins/Economy", "mysql.yml");
 	}
-	
-	public FileConfiguration getMySQLFileConfiguration()
-	{
+
+	public FileConfiguration getMySQLFileConfiguration() {
 		return YamlConfiguration.loadConfiguration(getMySQLFile());
 	}
-	
-	public void setStandardMySQL()
-	{
+
+	public void setStandardMySQL() {
 		FileConfiguration cfg = getMySQLFileConfiguration();
 		cfg.options().copyDefaults(true);
 		cfg.addDefault("username", "root");
@@ -39,23 +35,20 @@ public class EconomyFileManager {
 		cfg.addDefault("database", "localhost");
 		cfg.addDefault("host", "localhost");
 		cfg.addDefault("port", "3306");
-		try
-		{
+		try {
 			cfg.save(getMySQLFile());
-		} catch (IOException e)
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void readMySQL()
-	{
+
+	public void readMySQL() {
 		FileConfiguration cfg = getMySQLFileConfiguration();
 		mySQL.username = cfg.getString("username");
 		mySQL.password = cfg.getString("password");
 		mySQL.database = cfg.getString("database");
 		mySQL.host = cfg.getString("host");
 		mySQL.port = cfg.getString("port");
-		
+
 	}
 }
